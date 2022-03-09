@@ -1,0 +1,11 @@
+{
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": "admin",
+  "jti": "129dda81-f363-4a20-b186-0e4872e30bde",
+  "http://schemas.microsoft.com/ws/2008/06/identity/claims/role": [
+    "Admin",
+    "User"
+  ],
+  "exp": 1646852083,
+  "iss": "https://localhost:7253",
+  "aud": "http://localhost:7000"
+}

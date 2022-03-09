@@ -1,0 +1,317 @@
+{
+	"info": {
+		"_postman_id": "ff89dfb2-3678-4a89-8885-6dbf26428664",
+		"name": "JWT Authentication",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"jinsongeo@gmail.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7253/api/Auth/register",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7253",
+					"path": [
+						"api",
+						"Auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"user\",\r\n  \"password\": \"Secret@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7253/api/Auth/login",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7253",
+					"path": [
+						"api",
+						"Auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"jinsongeo@gmail.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7253/api/Auth/register-admin",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7253",
+					"path": [
+						"api",
+						"Auth",
+						"register-admin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Forecast as User",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if (!pm.collectionVariables.get(\"bearerToken\") || Date.now() > new Date(pm.collectionVariables.get(\"bearerTokenExpiresOn\") * 1000)) {    \r",
+							"    pm.sendRequest({\r",
+							"        url: pm.collectionVariables.get(\"loginURL\"),\r",
+							"        method: 'POST',\r",
+							"        header: 'Content-Type: application/json',\r",
+							"        body: {   \r",
+							"                mode: 'raw',\r",
+							"                raw: JSON.stringify({         \r",
+							"                \"username\": pm.collectionVariables.get(\"user\"),\r",
+							"                \"password\": pm.collectionVariables.get(\"userSecret\")\r",
+							"            })\r",
+							"        }\r",
+							"    }, function (err, res) {\r",
+							"        if (err) {\r",
+							"            console.log(err);\r",
+							"        } else {\r",
+							"            let resJson = res.json();\r",
+							"            console.log(resJson);\r",
+							"            pm.collectionVariables.set(\"bearerTokenExpiresOn\", resJson.expires_on);\r",
+							"            pm.collectionVariables.set(\"bearerToken\", resJson.token);\r",
+							"        }\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"jinsongeo@gmail.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7253/api/Weather/forecast",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7253",
+					"path": [
+						"api",
+						"Weather",
+						"forecast"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Forecast as Admin",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"if (!pm.collectionVariables.get(\"bearerTokenAdmin\") || Date.now() > new Date(pm.collectionVariables.get(\"bearerTokenAdminExpiresOn\") * 1000)) {    \r",
+							"    pm.sendRequest({\r",
+							"        url: pm.collectionVariables.get(\"loginURL\"),\r",
+							"        method: 'POST',\r",
+							"        header: 'Content-Type: application/json',\r",
+							"        body: {   \r",
+							"                mode: 'raw',\r",
+							"                raw: JSON.stringify({         \r",
+							"                \"username\": pm.collectionVariables.get(\"admin\"),\r",
+							"                \"password\": pm.collectionVariables.get(\"adminSecret\")\r",
+							"            })\r",
+							"        }\r",
+							"    }, function (err, res) {\r",
+							"        if (err) {\r",
+							"            console.log(err);\r",
+							"        } else {\r",
+							"            let resJson = res.json();\r",
+							"            console.log(resJson);\r",
+							"            pm.collectionVariables.set(\"bearerTokenAdminExpiresOn\", resJson.expires_on);\r",
+							"            pm.collectionVariables.set(\"bearerTokenAdmin\", resJson.token);\r",
+							"        }\r",
+							"    });\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{bearerTokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"jinsongeo@gmail.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7253/api/Weather/forecast-admin",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7253",
+					"path": [
+						"api",
+						"Weather",
+						"forecast-admin"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "bearerToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "bearerTokenExpiresOn",
+			"value": ""
+		},
+		{
+			"key": "user",
+			"value": "user",
+			"type": "string"
+		},
+		{
+			"key": "userSecret",
+			"value": "Secret@1234",
+			"type": "string"
+		},
+		{
+			"key": "admin",
+			"value": "admin",
+			"type": "string"
+		},
+		{
+			"key": "adminSecret",
+			"value": "Secret@1234",
+			"type": "string"
+		},
+		{
+			"key": "loginURL",
+			"value": "https://localhost:7253/api/Auth/login",
+			"type": "string"
+		},
+		{
+			"key": "bearerTokenAdmin",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "bearerTokenAdminExpiresOn",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -1,0 +1,9 @@
+﻿//Use below database migration command to create a migration script. 
+PM> add-migration Initial -Project WebAPI
+
+
+//To create database and tables.
+PM> update-database -Project WebAPI
+
+
+

@@ -1,0 +1,7 @@
+{
+  "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name": "jinsongeo",
+  "jti": "9541ea4e-5b36-4152-9bc9-95c975a91e6f",
+  "exp": 1646851595,
+  "iss": "https://localhost:7253",
+  "aud": "http://localhost:7000"
+}
