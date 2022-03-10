@@ -8,6 +8,9 @@ using WebAPI.Authentication.Models;
 
 namespace WebAPI.Controllers
 {
+    /// <summary>
+    /// The Authentication API
+    /// </summary>
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
@@ -29,8 +32,20 @@ namespace WebAPI.Controllers
 
         // Claims --> System.Security.Claims
         // JwtRegisteredClaimNames --> System.IdentityModel.Tokens.Jwt
+        /// <summary>
+        /// Login to access the Forecast Data
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        /// <response code="200">OK: On Login Success</response>
+        /// <response code="401">Unauthorized: On Login Failure</response>
+        /// <response code="500">Internal Server Error: On Server Error</response>
         [HttpPost]
         [Route("login")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Produces("application/json")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -61,8 +76,13 @@ namespace WebAPI.Controllers
         }
 
         // IdentityUser --> Microsoft.AspNetCore.Identity
+        /// <summary>
+        /// Register as a User
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        [Route("register")]
+        [Route("register")]     
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
@@ -83,6 +103,11 @@ namespace WebAPI.Controllers
         }
 
         // IdentityRole --> Microsoft.AspNetCore.Identity
+        /// <summary>
+        /// Register as an Admin
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
