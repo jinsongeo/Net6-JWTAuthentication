@@ -6,18 +6,11 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.Text;
 using WebAPI.Authentication;
-using WebAPI.Configurations.ConfigurationSections.Export;
-using SysConfig = System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configuration Manager
 ConfigurationManager configuration = builder.Configuration;
-
-//Reads from app.Config. Doesn't read from web.config
-var value = SysConfig.ConfigurationManager.AppSettings["webconfigtest"];
-
-var configSection = (ExportConfigurationSection)SysConfig.ConfigurationManager.GetSection("WebApi.Export");
 
 // Add services to the container.
 
