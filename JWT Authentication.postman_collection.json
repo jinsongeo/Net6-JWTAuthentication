@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "ff89dfb2-3678-4a89-8885-6dbf26428664",
+		"_postman_id": "ff89dfb2-3678-4a89-8885-6dbf26428553",
 		"name": "JWT Authentication",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"jinsongeo@gmail.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
+					"raw": "{\r\n    \"username\": \"user\",\r\n    \"email\": \"user@email.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -72,7 +72,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"jinsongeo@gmail.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"user@email.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -148,7 +148,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"jinsongeo@gmail.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"user@email.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -224,7 +224,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"jinsongeo@gmail.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"email\": \"user@email.com\",\r\n    \"password\":\"Secret@1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
