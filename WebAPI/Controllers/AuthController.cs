@@ -147,6 +147,7 @@ namespace WebAPI.Controllers
         // SecurityAlgorithms   --> Microsoft.IdentityModel.Tokens
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
+            //var f = new SecurityTokenDescriptor() {  };
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
 
             var token = new JwtSecurityToken(

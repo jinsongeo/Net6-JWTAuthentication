@@ -22,6 +22,28 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<AuthenticationDbContext>()
     .AddDefaultTokenProviders();
 
+// TokenValidationParameters    --> Microsoft.IdentityModel.Tokens;
+// SymmetricSecurityKey         --> Microsoft.IdentityModel.Tokens;
+JwtBearerOptions GetJWTBearerOptions(JwtBearerOptions options) 
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+
+        // set clockskew to zero so tokens expire exactly at token expiration time (instead of 5 minutes later)
+        ClockSkew = TimeSpan.Zero,
+
+        ValidAudience = configuration["JWT:ValidAudience"],
+        ValidIssuer = configuration["JWT:ValidIssuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
+    };
+    return options;
+}
+
 // Adding Authentication.
 // JwtBearerDefaults --> Microsoft.AspNetCore.Authentication.JwtBearer;
 builder.Services.AddAuthentication(options =>
@@ -32,21 +54,9 @@ builder.Services.AddAuthentication(options =>
 })
 
 // Adding Jwt Bearer Options.
-// TokenValidationParameters    --> Microsoft.IdentityModel.Tokens;
-// SymmetricSecurityKey         --> Microsoft.IdentityModel.Tokens;
-.AddJwtBearer(options =>
- {
-     options.SaveToken = true;
-     options.RequireHttpsMetadata = false;
-     options.TokenValidationParameters = new TokenValidationParameters()
-     {
-         ValidateIssuer = true,
-         ValidateAudience = true,
-         ValidAudience = configuration["JWT:ValidAudience"],
-         ValidIssuer = configuration["JWT:ValidIssuer"],
-         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
-     };
- });
+// AddJwtBearer                 --> Microsoft.AspNetCore.Authentication.JwtBearer
+.AddJwtBearer(options => GetJWTBearerOptions(options))
+.AddJwtBearer("refresh", options => GetJWTBearerOptions(options));
 
 
 builder.Services.AddControllers();
@@ -75,7 +85,7 @@ builder.Services.AddSwaggerGen(options =>
             Name = "License",
             Url = new Uri("https://example.com/license")
         }
-         
+
     });
 
     var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
